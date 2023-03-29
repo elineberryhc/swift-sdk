@@ -1340,14 +1340,10 @@ extension DataStore: Hashable {
     
 }
 
-extension DataStore: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(uuid)
+extension DataStore
+{
+    public func lastSyncDate(query: Query) -> Date?
+    {
+        return self.cache?.lastSync(query: query)
     }
-
-    public static func ==(lhs: DataStore<T>, rhs: DataStore<T>) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-
 }
