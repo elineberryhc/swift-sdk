@@ -43,8 +43,8 @@ open class DataStore<T: Persistable> where T: NSObject {
     
     fileprivate let fileURL: URL?
     
-    internal let cache: AnyCache<T>?
-    internal let sync: AnySync?
+    let cache: AnyCache<T>?
+    let sync: AnySync?
     
     @available(*, deprecated, message: "Deprecated in version 3.18.2. Please use DataStore.options instead")
     open var deltaSet: Bool {
@@ -1338,4 +1338,16 @@ extension DataStore: Hashable {
         return lhs.uuid == rhs.uuid
     }
     
+}
+
+extension DataStore: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
+    public static func ==(lhs: DataStore<T>, rhs: DataStore<T>) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+
 }
